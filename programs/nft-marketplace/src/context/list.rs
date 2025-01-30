@@ -52,7 +52,7 @@ pub struct List<'info> {
         constraint = metadata.collection.as_ref().unwrap().verified == true
 
     )]
-    pub metadata: InterfaceAccount<'info, MetadataAccount>,
+    pub metadata: Account<'info, MetadataAccount>,
     #[account(
         seeds = [
         b"metadata",
@@ -63,12 +63,14 @@ pub struct List<'info> {
         seeds::program = metadata_program.key(),
         bump
     )]
-    pub master_edition: InterfaceAccount<'info, MasterEditionAccount>,
+         #[account(constraint = master_edition.supply > 0)]
+    pub master_edition: Account<'info, MasterEditionAccount>,
     pub metadata_program: Program<'info, Metadata>,
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub token_program: Interface<'info, TokenInterface>,
     pub system_program: Program<'info, System>
 }	
+
 
 impl<'info> List<'info> {
     pub fn create_listing(&mut self, price: u64,  bump: &ListBumps) -> Result<()> {
