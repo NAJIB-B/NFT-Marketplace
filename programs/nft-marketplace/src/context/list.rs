@@ -36,7 +36,7 @@ pub struct List<'info> {
         payer = maker,
         seeds = [b"listing", marketplace.key().as_ref(), maker_mint.key().as_ref()],
         bump,
-        space = Listing::INIT_SPACE
+        space = 8 + Listing::INIT_SPACE
     )]
     pub listing: Account<'info, Listing>,
     pub collection_mint: InterfaceAccount<'info, Mint>,
